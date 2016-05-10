@@ -1,0 +1,13 @@
+filebeat:
+  prospectors:
+    -
+      paths:
+      - /var/log/*.log
+      exclude_files: ["^syslog$", "^auth.log$", "^filebeat.log*$", "^topbeat.log*$"]
+      
+      input_type: log
+      document_type: log
+      
+      fields:
+        type: log
+        

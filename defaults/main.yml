@@ -1,0 +1,38 @@
+libpcap_package: 'libpcap0.8'
+filebeat_version: 1.2.1
+filebeat_version_check: 1.2.1
+filebeat_platform: amd64
+
+filebeat_elasticsearch_output: false
+filebeat_elasticsearch_host: 'localhost:9200'
+
+filebeat_logstash_output: true
+filebeat_logstash_host: 'localhost:5044'
+
+ssl_cert_local_directory: files/certs
+ssl_cert_directory: /etc/pki/tls/certs
+ssl_cert: logstash-forwarder.crt
+
+certificate_authorities: '["/etc/pki/tls/certs/logstash-forwarder.crt"]'
+
+apt_cache_valid_time: 600
+
+prospectors:
+  - id: syslog
+    paths:
+    - log_paths:
+        - /var/log/syslog
+        - /var/log/auth.log
+      document_type: syslog
+    type: syslog
+
+  - id: varlog
+    paths:
+    - log_paths:
+        - /var/log/*.log
+      exclude_files:
+        - "^syslog$"
+        - "^auth.log$"
+        - "^filebeat.log*$"
+        - "^topbeat.log*$"
+      document_type: log

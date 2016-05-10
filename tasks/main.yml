@@ -1,0 +1,52 @@
+---
+# tasks file for jpnewman.elk-filebeat
+- name: Create directory to store ssl crt
+  tags: ["ssl"]
+  file: path={{ ssl_cert_directory }} state=directory
+
+- name: Copy SSL cert
+  tags: ["ssl"]
+  copy: src={{ ssl_cert_local_directory }}/{{ ssl_cert }} dest={{ ssl_cert_directory }}
+  notify: restart filebeat
+
+# Install
+- name: Install Filebeat dependencies
+  apt: name={{ libpcap_package }} state=present update_cache=yes cache_valid_time={{ apt_cache_valid_time }}
+
+- name: Check if Filebeat is already at the right version
+  shell: dpkg -s Filebeat | grep Version | awk '{print $2}'
+  register: installed_version
+  always_run: True
+  ignore_errors: True
+
+- name: Download Filebeat agent
+  get_url:
+    url: https://download.elastic.co/beats/filebeat/filebeat_{{ filebeat_version }}_{{ filebeat_platform }}.deb
+    dest: /tmp
+  when: installed_version.stdout != '{{ filebeat_version_check }}'
+
+- name: Install Filebeat agent
+  apt: deb=/tmp/filebeat_{{ filebeat_version }}_{{ filebeat_platform }}.deb
+  when: installed_version.stdout != '{{ filebeat_version_check }}'
+
+# Config
+- name: Create directory for Filebeat Configures
+  file: path=/var/log/filebeat state=directory
+
+- name: Create directory for Filebeat Configures
+  file: path=/etc/filebeat/conf.d state=directory
+
+- name: Configure Filebeat
+  template: src=filebeat.yml.j2 dest=/etc/filebeat/filebeat.yml
+  notify: restart filebeat
+
+- name: Configure Filebeat prospectors
+  template: src=filebeat_conf.yml.j2 dest=/etc/filebeat/conf.d/{{ item.id }}.yml
+  notify: restart filebeat
+  with_items: prospectors
+
+- name: Index Filebeat Elasticsearch
+  shell: curl -XPUT 'http://{{ filebeat_elasticsearch_host }}/_template/filebeat' -d@/etc/filebeat/filebeat.template.json
+
+- name: Start Filebeat
+  service: name=filebeat state=started

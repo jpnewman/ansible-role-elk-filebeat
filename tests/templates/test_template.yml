@@ -1,0 +1,12 @@
+---
+- hosts: all
+  gather_facts: no
+  become: no
+
+  vars_files:
+    - ../../defaults/main.yml
+
+  tasks:
+    - name: Configure Filebeat
+      template: src=../../templates/filebeat_conf.yml.j2 dest=./tmp/{{ item.id }}.yml
+      with_items: prospectors

@@ -1,0 +1,26 @@
+filebeat:
+  prospectors:
+    -
+      {% for pros in item.paths -%}
+      paths:
+      {% for path in pros.log_paths -%}
+        - {{ path }}
+      {% endfor -%}
+      {%- if pros.exclude_files is defined -%}
+      exclude_files: ["{{ pros.exclude_files|join('", "') }}"]
+      {% endif %}
+
+      input_type: {{ pros.input_type | default('log') }}
+      {% if pros.document_type is defined -%}
+      document_type: {{ pros.document_type }}
+      {% endif -%}
+      {% endfor %}
+
+      fields:
+        type: {{ item.type | default('log') }}
+        {% if item.app_id is defined -%}
+        app_id: {{ item.app_id }}
+        {% endif -%}
+        {% if item.elasticsearch_index is defined -%}
+        elasticsearch_index: {{ item.elasticsearch_index }}
+        {% endif -%}
