@@ -1,5 +1,6 @@
 # jpnewman.elk-filebeat
 
+[![Ansible Role](https://img.shields.io/ansible/role/9588.svg?maxAge=2592000)](https://galaxy.ansible.com/jpnewman/elk-filebeat/)
 [![Build Status](https://travis-ci.org/jpnewman/ansible-role-elk-filebeat.svg?branch=master)](https://travis-ci.org/jpnewman/ansible-role-elk-filebeat)
 
 This Ansible role installs elastic [Filebeat](https://www.elastic.co/products/beats/filebeat)
