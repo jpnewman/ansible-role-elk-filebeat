@@ -2,15 +2,14 @@ filebeat:
   prospectors:
     -
       paths:
-      - /var/log/*.log
-      exclude_files: ["^syslog$", "^auth.log$", "^filebeat.log.*$", "^topbeat.log.*$"]
+      - /var/gerrit/review/logs/sshd_log
       
       input_type: log
       document_type: log
       
       fields:
-        type: log
-        filebeat_config: /etc/filebeat/conf.d/varlog.yml
+        type: gerrit_sshd_log
+        filebeat_config: /etc/filebeat/conf.d/gerrit-sshd.yml
         app_id: gerrit
         elasticsearch_index: gerrit
         

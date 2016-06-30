@@ -1,0 +1,76 @@
+---
+prospectors:
+  - id: syslog
+    paths:
+    - log_paths:
+        - /var/log/syslog
+        - /var/log/auth.log
+      document_type: syslog
+    type: syslog
+    app_id: gerrit
+    elasticsearch_index: gerrit
+
+  - id: varlog
+    paths:
+    - log_paths:
+        - /var/log/*.log
+      exclude_files:
+        - "^syslog$"
+        - "^auth.log$"
+        - "^filebeat.log.*$"
+        - "^topbeat.log.*$"
+      document_type: log
+    app_id: gerrit
+    elasticsearch_index: gerrit
+
+  - id: gerrit-review
+    paths:
+    - log_paths:
+      - /var/gerrit/review/logs/change-merged.log
+      - /var/gerrit/review/logs/comment-added.log
+      - /var/gerrit/review/logs/patchset-created.log
+      - /var/gerrit/review/logs/ref-updated.log
+      document_type: log
+    multiline:
+      pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}'
+      negate: true
+      match: after
+    type: gerrit_review_logs
+    app_id: gerrit
+    elasticsearch_index: gerrit
+
+  - id: gerrit-logs
+    paths:
+    - log_paths:
+      - /var/gerrit/review/logs/delete_log
+      - /var/gerrit/review/logs/error_log
+      document_type: log
+    multiline:
+      pattern: '^\[[0-9]{4}-[0-9]{2}-[0-9]{2}'
+      negate: true
+      match: after
+    type: gerrit_logs
+    app_id: gerrit
+    elasticsearch_index: gerrit
+
+  - id: gerrit-replication
+    paths:
+    - log_paths:
+      - /var/gerrit/review/logs/replication_log
+      document_type: log
+    multiline:
+      pattern: '^\['
+      negate: true
+      match: after
+    type: gerrit_replication_log
+    app_id: gerrit
+    elasticsearch_index: gerrit
+
+  - id: gerrit-sshd
+    paths:
+    - log_paths:
+        - /var/gerrit/review/logs/sshd_log
+      document_type: log
+    type: gerrit_sshd_log
+    app_id: gerrit
+    elasticsearch_index: gerrit

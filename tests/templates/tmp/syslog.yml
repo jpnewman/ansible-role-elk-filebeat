@@ -10,4 +10,7 @@ filebeat:
       
       fields:
         type: syslog
+        filebeat_config: /etc/filebeat/conf.d/syslog.yml
+        app_id: gerrit
+        elasticsearch_index: gerrit
         

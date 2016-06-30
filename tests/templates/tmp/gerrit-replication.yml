@@ -1,0 +1,20 @@
+filebeat:
+  prospectors:
+    -
+      paths:
+      - /var/gerrit/review/logs/replication_log
+      
+      input_type: log
+      document_type: log
+      
+      multiline:
+        pattern: '^\['
+        negate: true
+        match: after
+
+      fields:
+        type: gerrit_replication_log
+        filebeat_config: /etc/filebeat/conf.d/gerrit-replication.yml
+        app_id: gerrit
+        elasticsearch_index: gerrit
+        

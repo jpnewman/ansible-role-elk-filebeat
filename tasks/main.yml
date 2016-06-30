@@ -49,4 +49,4 @@
   shell: curl -XPUT 'http://{{ filebeat_elasticsearch_host }}/_template/filebeat' -d@/etc/filebeat/filebeat.template.json
 
 - name: Start Filebeat
-  service: name=filebeat state=started
+  service: name=filebeat state=started enabled=yes

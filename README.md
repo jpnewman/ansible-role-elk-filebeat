@@ -57,8 +57,8 @@ prospectors:
       exclude_files:
         - "^syslog$"
         - "^auth.log$"
-        - "^filebeat.log*$"
-        - "^topbeat.log*$"
+        - "^filebeat.log.*$"
+        - "^topbeat.log.*$"
       document_type: log
 ~~~
 

@@ -16,8 +16,17 @@ filebeat:
       {% endif -%}
       {% endfor %}
 
+      {% if item.multiline is defined -%}
+      multiline:
+        pattern: '{{ item.multiline.pattern }}'
+        negate: {{ item.multiline.negate | lower }}
+        match: {{ item.multiline.match }}
+
+      {% endif -%}
+
       fields:
         type: {{ item.type | default('log') }}
+        filebeat_config: /etc/filebeat/conf.d/{{ item.id }}.yml
         {% if item.app_id is defined -%}
         app_id: {{ item.app_id }}
         {% endif -%}

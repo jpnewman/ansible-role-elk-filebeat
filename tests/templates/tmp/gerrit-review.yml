@@ -1,0 +1,23 @@
+filebeat:
+  prospectors:
+    -
+      paths:
+      - /var/gerrit/review/logs/change-merged.log
+      - /var/gerrit/review/logs/comment-added.log
+      - /var/gerrit/review/logs/patchset-created.log
+      - /var/gerrit/review/logs/ref-updated.log
+      
+      input_type: log
+      document_type: log
+      
+      multiline:
+        pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}'
+        negate: true
+        match: after
+
+      fields:
+        type: gerrit_review_logs
+        filebeat_config: /etc/filebeat/conf.d/gerrit-review.yml
+        app_id: gerrit
+        elasticsearch_index: gerrit
+        

@@ -17,6 +17,13 @@ certificate_authorities: '["/etc/pki/tls/certs/logstash-forwarder.crt"]'
 
 apt_cache_valid_time: 600
 
+geoip_database_url_path: http://geolite.maxmind.com/download/geoip/database
+geoip_database_url_filename: GeoLiteCity.dat.gz
+geoip_database_extracted_filename: GeoLiteCity.dat
+geoip_database_paths:
+  - /usr/share/GeoIP/{{ geoip_database_extracted_filename }}
+  - /usr/local/var/GeoIP/{{ geoip_database_extracted_filename }}
+
 prospectors:
   - id: syslog
     paths:
@@ -33,6 +40,6 @@ prospectors:
       exclude_files:
         - "^syslog$"
         - "^auth.log$"
-        - "^filebeat.log*$"
-        - "^topbeat.log*$"
+        - "^filebeat.log.*$"
+        - "^topbeat.log.*$"
       document_type: log
