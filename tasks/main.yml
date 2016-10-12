@@ -18,6 +18,7 @@
   register: installed_version
   always_run: True
   ignore_errors: True
+  changed_when: False
 
 - name: Download Filebeat agent
   get_url:
@@ -27,7 +28,7 @@
 
 - name: Install Filebeat agent
   apt: deb=/tmp/filebeat_{{ filebeat_version }}_{{ filebeat_platform }}.deb
-  when: installed_version.stdout != '{{ filebeat_version_check }}'
+  when: installed_version.stdout != '{{ filebeat_version_check }}' and not ansible_check_mode
 
 # Config
 - name: Create directory for Filebeat Configures

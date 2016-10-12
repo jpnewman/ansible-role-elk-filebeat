@@ -71,6 +71,10 @@ prospectors:
     - log_paths:
         - /var/gerrit/review/logs/sshd_log
       document_type: log
+    multiline:
+      pattern: '^\['
+      negate: true
+      match: after
     type: gerrit_sshd_log
     app_id: gerrit
     elasticsearch_index: gerrit
