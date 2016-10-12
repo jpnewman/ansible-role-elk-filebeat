@@ -1,0 +1,20 @@
+filebeat:
+  prospectors:
+    -
+      paths:
+      - /var/log/tomcat7/catalina.out
+      
+      input_type: log
+      document_type: artifactory-catalina
+      
+      multiline:
+        pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}'
+        negate: true
+        match: after
+
+      fields:
+        type: artifactory-catalina
+        filebeat_config: /etc/filebeat/conf.d/catalina.yml
+        app_id: artifactory
+        elasticsearch_index: artifactory
+        

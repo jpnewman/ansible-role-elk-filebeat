@@ -7,6 +7,11 @@ filebeat:
       input_type: log
       document_type: log
       
+      multiline:
+        pattern: '^\['
+        negate: true
+        match: after
+
       fields:
         type: gerrit_sshd_log
         filebeat_config: /etc/filebeat/conf.d/gerrit-sshd.yml

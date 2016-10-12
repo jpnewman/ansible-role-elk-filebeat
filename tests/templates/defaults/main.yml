@@ -78,3 +78,29 @@ prospectors:
     type: gerrit_sshd_log
     app_id: gerrit
     elasticsearch_index: gerrit
+
+  - id: tomcat
+    paths:
+    - log_paths:
+        - /var/log/tomcat7/*.log
+      document_type: tomcat
+    multiline:
+      pattern: '^([Jj]an(uary|uar)?|[Ff]eb(ruary|ruar)?|[Mm](a|ä)?r(ch|z)?|[Aa]pr(il)?|[Mm]a(y|i)?|[Jj]un(e|i)?|[Jj]ul(y)?|[Aa]ug(ust)?|[Ss]ep(tember)?|[Oo](c|k)?t(ober)?|[Nn]ov(ember)?|[Dd]e(c|z)(ember)?) ((0[1-9])|([12][0-9])|(3[01])|[1-9]), [0-9]{4} (2[0123]|[01]?[0-9]):?([0-5][0-9])(:?(([0-5]?[0-9]|60)([:.,][0-9]+)?)) (AM|PM)'
+      negate: true
+      match: after
+    type: tomcat
+    app_id: artifactory
+    elasticsearch_index: artifactory
+
+  - id: catalina
+    paths:
+    - log_paths:
+        - /var/log/tomcat7/catalina.out
+      document_type: artifactory-catalina
+    multiline:
+      pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}'
+      negate: true
+      match: after
+    type: artifactory-catalina
+    app_id: artifactory
+    elasticsearch_index: artifactory
