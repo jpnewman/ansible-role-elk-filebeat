@@ -16,7 +16,7 @@
 - name: Check if Filebeat is already at the right version
   shell: dpkg -s Filebeat | grep Version | awk '{print $2}'
   register: installed_version
-  always_run: True
+  check_mode: no
   ignore_errors: True
   changed_when: False
 
@@ -44,10 +44,16 @@
 - name: Configure Filebeat prospectors
   template: src=filebeat_conf.yml.j2 dest=/etc/filebeat/conf.d/{{ item.id }}.yml
   notify: restart filebeat
-  with_items: prospectors
+  with_items: "{{ prospectors }}"
 
 - name: Index Filebeat Elasticsearch
   shell: curl -XPUT 'http://{{ filebeat_elasticsearch_host }}/_template/filebeat' -d@/etc/filebeat/filebeat.template.json
+  when: filebeat_logstash_proxy is not defined
 
-- name: Start Filebeat
+# - name: Index Filebeat Elasticsearch
+#   shell: curl --proxy '{{ filebeat_logstash_proxy }}' -XPUT 'http://{{ filebeat_elasticsearch_host }}/_template/filebeat' -d@/etc/filebeat/filebeat.template.json
+#   when: filebeat_logstash_proxy is defined
+
+- name: Starting Filebeat
   service: name=filebeat state=started enabled=yes
+  ignore_errors: "{{ ansible_check_mode }}"

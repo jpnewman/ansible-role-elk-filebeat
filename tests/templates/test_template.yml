@@ -4,9 +4,12 @@
   become: no
 
   vars_files:
-    - ./defaults/main.yml
+    - "{{ varfile | default('./defaults/main.yml') }}"
 
   tasks:
     - name: Configure Filebeat
       template: src=../../templates/filebeat_conf.yml.j2 dest=./tmp/{{ item.id }}.yml
-      with_items: prospectors
+      with_items: "{{ prospectors }}"
+
+    - name: Configure Filebeat
+      template: src=../../templates/filebeat.yml.j2 dest=./tmp/filebeat.yml

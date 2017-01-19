@@ -13,13 +13,15 @@ Ansible 2.x
 |Variable|Description|Default|
 |---|---|---|
 |```libpcap_package```||'libpcap0.8'|
-|```filebeat_version```||1.2.1|
-|```filebeat_version_check```||1.2.1|
+|```filebeat_version```||1.2.3|
+|```filebeat_version_check```||1.2.3|
 |```filebeat_platform```||amd64|
 |```filebeat_elasticsearch_output```||false|
 |```filebeat_elasticsearch_host```||'localhost:9200'|
 |```filebeat_logstash_output```||true|
 |```filebeat_logstash_host```||'localhost:5044'|
+|```filebeat_logstash_proxy```|||
+|```filebeat_logstash_proxy_use_local_resolver```|||
 |```ssl_cert_local_directory```||files/certs|
 |```ssl_cert_directory```||/etc/pki/tls/certs|
 |```ssl_cert```||logstash-forwarder.crt|

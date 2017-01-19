@@ -1,4 +1,7 @@
 ---
+filebeat_logstash_proxy: 'socks5://localhost:8232'
+filebeat_logstash_proxy_use_local_resolver: true
+
 filebeat_logstash_host: 'localhost:5044'
 filebeat_logstash_output: true
 certificate_authorities: '["/etc/pki/tls/certs/logstash-forwarder.crt"]'

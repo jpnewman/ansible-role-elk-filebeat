@@ -1,6 +1,6 @@
 libpcap_package: 'libpcap0.8'
-filebeat_version: 1.2.1
-filebeat_version_check: 1.2.1
+filebeat_version: 1.2.3
+filebeat_version_check: 1.2.3
 filebeat_platform: amd64
 
 filebeat_elasticsearch_output: false

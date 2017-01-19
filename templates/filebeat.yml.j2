@@ -7,6 +7,12 @@ output:
   logstash:
     enabled: {{ filebeat_logstash_output }}
     hosts: ["{{ filebeat_logstash_host }}"]
+    {% if filebeat_logstash_proxy is defined -%}
+    proxy_url: {{ filebeat_logstash_proxy }}
+    {% endif -%}
+    {% if filebeat_logstash_proxy_use_local_resolver is defined -%}
+    proxy_use_local_resolver: {{ filebeat_logstash_proxy_use_local_resolver | lower }}
+    {% endif -%}
     index: filebeat
     tls:
       certificate_authorities: {{ certificate_authorities }}
