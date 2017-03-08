@@ -7,8 +7,6 @@ output:
   logstash:
     enabled: True
     hosts: ["localhost:5044"]
-    proxy_url: socks5://localhost:8232
-    proxy_use_local_resolver: true
     index: filebeat
     tls:
       certificate_authorities: ["/etc/pki/tls/certs/logstash-forwarder.crt"]

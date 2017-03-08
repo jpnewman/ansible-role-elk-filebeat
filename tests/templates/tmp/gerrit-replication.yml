@@ -5,7 +5,7 @@ filebeat:
       - /var/gerrit/review/logs/replication_log
       
       input_type: log
-      document_type: log
+      document_type: gerrit_replication_log
       
       multiline:
         pattern: '^\['

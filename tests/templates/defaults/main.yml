@@ -33,8 +33,7 @@ prospectors:
       - /var/gerrit/review/logs/change-merged.log
       - /var/gerrit/review/logs/comment-added.log
       - /var/gerrit/review/logs/patchset-created.log
-      - /var/gerrit/review/logs/ref-updated.log
-      document_type: log
+      document_type: gerrit_review_logs
     multiline:
       pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}'
       negate: true
@@ -43,12 +42,38 @@ prospectors:
     app_id: gerrit
     elasticsearch_index: gerrit
 
+  - id: gerrit-ref
+    paths:
+    - log_paths:
+      - /var/gerrit/review/logs/ref-updated.log
+      document_type: gerrit_ref_logs
+    multiline:
+      pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}'
+      negate: true
+      match: after
+    type: gerrit_ref_logs
+    app_id: gerrit
+    elasticsearch_index: gerrit
+
+  - id: gerrit-error
+    paths:
+    - log_paths:
+      - /var/gerrit/review/logs/error_log.log
+      document_type: gerrit_error_log
+    multiline:
+      pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}'
+      negate: true
+      match: after
+    type: gerrit_error_log
+    app_id: gerrit
+    elasticsearch_index: gerrit
+
   - id: gerrit-logs
     paths:
     - log_paths:
       - /var/gerrit/review/logs/delete_log
       - /var/gerrit/review/logs/error_log
-      document_type: log
+      document_type: gerrit_logs
     multiline:
       pattern: '^\[[0-9]{4}-[0-9]{2}-[0-9]{2}'
       negate: true
@@ -61,7 +86,7 @@ prospectors:
     paths:
     - log_paths:
       - /var/gerrit/review/logs/replication_log
-      document_type: log
+      document_type: gerrit_replication_log
     multiline:
       pattern: '^\['
       negate: true
@@ -74,7 +99,7 @@ prospectors:
     paths:
     - log_paths:
         - /var/gerrit/review/logs/sshd_log
-      document_type: log
+      document_type: gerrit_sshd_log
     multiline:
       pattern: '^\['
       negate: true
