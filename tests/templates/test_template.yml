@@ -8,8 +8,12 @@
 
   tasks:
     - name: Configure Filebeat
-      template: src=../../templates/filebeat_conf.yml.j2 dest=./tmp/{{ item.id }}.yml
+      template:
+        src: ../../templates/filebeat_conf.yml.j2
+        dest: ./tmp/{{ item.id }}.yml
       with_items: "{{ prospectors }}"
 
     - name: Configure Filebeat
-      template: src=../../templates/filebeat.yml.j2 dest=./tmp/filebeat.yml
+      template:
+        src: ../../templates/filebeat.yml.j2
+        dest: ./tmp/filebeat.yml

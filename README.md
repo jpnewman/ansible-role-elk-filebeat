@@ -13,9 +13,11 @@ Ansible 2.x
 |Variable|Description|Default|
 |---|---|---|
 |```libpcap_package```||'libpcap0.8'|
-|```filebeat_version```||1.2.3|
-|```filebeat_version_check```||1.2.3|
+|```filebeat_version```||5.3.0|
+|```filebeat_version_check```||5.3.0|
 |```filebeat_platform```||amd64|
+|```filebeat_apt_package_name```||```"filebeat-{{ filebeat_version }}-{{ filebeat_platform }}.deb"```|
+|```filebeat_download_url```||```"https://artifacts.elastic.co/downloads/beats/filebeat/{{ filebeat_apt_package_name }}"```|
 |```filebeat_elasticsearch_output```||false|
 |```filebeat_elasticsearch_host```||'localhost:9200'|
 |```filebeat_logstash_output```||true|
@@ -27,6 +29,10 @@ Ansible 2.x
 |```ssl_cert```||logstash-forwarder.crt|
 |```certificate_authorities```||'["/etc/pki/tls/certs/logstash-forwarder.crt"]'|
 |```apt_cache_valid_time```||600|
+|```geoip_database_extracted_filename```||GeoLite2-City.mmdb
+|```geoip_database_url_filename```||```"{{ geoip_database_extracted_filename }}.gz"```|
+|```geoip_database_url```||```"http://geolite.maxmind.com/download/geoip/database/{{ geoip_database_url_filename }}"```|
+|```geoip_database_paths```||```/usr/share/GeoIP/{{ geoip_database_extracted_filename }}```<br />```/usr/local/var/GeoIP/{{ geoip_database_extracted_filename }}```|
 |```prospectors```|Contains a list of 'prospector' classes||
 
 |'prospector' class variables|Description|
