@@ -15,6 +15,7 @@ Ansible 2.x
 |```libpcap_package```||'libpcap0.8'|
 |```filebeat_version```||1.2.3|
 |```filebeat_version_check```||1.2.3|
+|```filebeat_name```|Overrides ```beat.name```||
 |```filebeat_platform```||amd64|
 |```filebeat_elasticsearch_output```||false|
 |```filebeat_elasticsearch_host```||'localhost:9200'|

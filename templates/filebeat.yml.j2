@@ -18,6 +18,9 @@ output:
       certificate_authorities: {{ certificate_authorities }}
 
 shipper:
+  {% if filebeat_name is defined -%}
+  name: {{ filebeat_name | lower }}
+  {% endif %}
 
 logging:
   level: warning
